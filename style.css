@@ -35,3 +35,25 @@
 .order-state.returning{color:#ffd18a;background:#403421}
 .order-state.charging{color:#ffd18a;background:#403421}
 .order-state.ready{color:#84dfac;background:#1d3931}
+/* Route details: road-following outbound and return paths */
+.road.major path{stroke:#465851;stroke-width:17;stroke-linecap:round;stroke-linejoin:round}
+.road.major path:nth-child(2){stroke:#465851;stroke-width:15;stroke-dasharray:none}
+.road.minor path{stroke:#364944;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.lane-markings path{fill:none;stroke:#a2ad91;stroke-width:1.4;stroke-dasharray:9 12;opacity:.42;stroke-linecap:round;stroke-linejoin:round}
+.route-layer{z-index:2;pointer-events:none;overflow:visible}
+.route-glow,.route-line{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.route-glow{stroke-width:8;opacity:.18;filter:blur(2px)}
+.route-line{stroke-width:3.5;stroke-dasharray:10 6;animation:route-flow .8s linear infinite}
+.route-group.outbound .route-glow{stroke:#bd9eff}
+.route-group.outbound .route-line{stroke:#c2a9ff}
+.route-group.returning .route-glow{stroke:#63e0bb}
+.route-group.returning .route-line{stroke:#63e0bb;stroke-dasharray:5 5}
+.route-node{fill:#17242a;stroke:#e8dcff;stroke-width:2;vector-effect:non-scaling-stroke}
+.route-group.returning .route-node{stroke:#a6ffe1}
+.route-progress{fill:#fff;stroke:#9b73ff;stroke-width:3;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 5px #d5c1ff)}
+.route-group.returning .route-progress{stroke:#38c99c;filter:drop-shadow(0 0 5px #9affdf)}
+@keyframes route-flow{to{stroke-dashoffset:-32}}
+.route-summary{margin-top:9px;border:1px solid #293d46;background:#14232b;border-radius:8px;padding:9px 11px;color:#aebec4;font-size:10px;line-height:1.5;min-height:34px}
+.route-summary::before{content:'✦';color:#c2a9ff;margin-right:7px}
+.route-group.returning~.route-summary{color:#8de6c7}
+@media(max-width:650px){.route-summary{font-size:9px}.route-line{stroke-width:3}.route-node{r:2}}
