@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1720"><title>Curitiba — Entregas por drones</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar"><div class="brand"><span class="brand-mark">✦</span><div><strong>CURITIBA AÉREA</strong><small>Central de operações · Simulação urbana</small></div></div><div class="live"><i></i> SIMULAÇÃO ATIVA <span id="clock">00:00</span></div></header>
+  <main class="layout">
+    <section class="map-panel"><div class="map-head"><div><p class="eyebrow">VISÃO OPERACIONAL</p><h1>Malha de entregas</h1></div><div class="map-tools"><span class="weather">☀️ <span>23°</span> · Vento 8 km/h</span><button id="trafficToggle" class="toggle active" title="Ativar ou pausar trânsito e pedestres">Trânsito <b>ON</b></button></div></div>
+      <div id="map" class="map" aria-label="Mapa esquemático de Curitiba">
+        <svg class="streets" viewBox="0 0 1000 650" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <pattern id="roof" width="72" height="58" patternUnits="userSpaceOnUse">
+              <rect width="72" height="58" fill="#1c302e"/>
+              <rect x="7" y="7" width="24" height="18" rx="2" fill="#7d8174" stroke="#a7a18a" stroke-width="1"/>
+              <path d="M10 11h18M10 15h18M10 19h18" stroke="#c3bda5" stroke-width="1" opacity=".72"/>
+              <rect x="39" y="6" width="26" height="24" rx="2" fill="#626f68" stroke="#a1a391" stroke-width="1"/>
+              <path d="M43 10h18M43 14h18M43 18h18M43 22h18" stroke="#bac0aa" stroke-width="1" opacity=".65"/>
+              <rect x="8" y="35" width="54" height="15" rx="2" fill="#384b42" stroke="#718176" stroke-width="1"/>
+              <path d="M13 39h44M13 43h44M13 47h44" stroke="#9da995" stroke-width="1" opacity=".55"/>
+            </pattern>
+          </defs>
+          <path class="city-blocks" d="M0 0h1000v650H0z" fill="url(#roof)"/>
+          <path class="river" d="M-20 490 C160 430 180 540 340 470 S560 420 650 480 850 550 1020 420"/>
+          <g class="road major"><path d="M40 140 L920 140 M80 300 L960 300 M30 465 L900 465 M190 40 L190 610 M430 30 L430 620 M660 20 L660 620 M850 50 L850 600"/><path d="M70 570 L900 80 M20 220 L930 540"/></g>
+          <g class="road minor"><path d="M0 90 L1000 90 M0 205 L1000 205 M0 385 L1000 385 M0 540 L1000 540 M100 0 L100 650 M315 0 L315 650 M540 0 L540 650 M760 0 L760 650 M950 0 L950 650"/></g>
+          <g class="park"><path d="M90 90h120v90H90z M475 330h140v115H475z M735 115h145v100H735z M260 480h120v95H260z"/></g>
+        </svg>
+        <div class="district d1">SANTA FELICIDADE</div><div class="district d2">CENTRO CÍVICO</div><div class="district d3">CENTRO</div><div class="district d4">BATEL · BIGORRILHO</div><div class="district d5">ÁGUA VERDE · PORTÃO</div><div class="district d6">CAJURU</div><div class="district d7">BOQUEIRÃO</div><div class="district d8">CIC</div>
+        <div id="routeLayer" class="route-layer"></div><div id="pointLayer" class="point-layer"></div><div id="trafficLayer" class="traffic-layer"></div><div id="droneLayer" class="drone-layer"></div>
+        <div class="map-label north">N <b>↑</b></div><div class="map-label scale">━━━━ <small>2 km aprox.</small></div>
+        <div class="map-legend"><span><i class="lg-base"></i> Bases</span><span><i class="lg-point"></i> Entregas</span><span><i class="lg-route"></i> Rotas ativas</span></div>
+      </div>
+      <div class="map-foot"><span><i class="pulse"></i> Mapa esquemático inspirado em Curitiba</span><span>26 pontos · 2 bases · 10 drones</span></div>
+    </section>
+    <aside class="sidebar"><div class="controls"><button id="startBtn" class="btn primary">▶ <span>Iniciar simulação</span></button><button id="resetBtn" class="btn secondary">↻ <span>Reiniciar</span></button><label class="speed-control">Velocidade <select id="speed"><option value="1">1× Normal</option><option value="2">2× Rápida</option><option value="4">4× Turbo</option></select></label></div>
+      <section class="stats"><div class="section-title"><h2>Operação agora</h2><span class="live-tag"><i></i> AO VIVO</span></div><div class="stat-grid"><article><span class="stat-icon violet">↗</span><div><strong id="delivered">0</strong><small>Entregas concluídas</small></div></article><article><span class="stat-icon blue">◉</span><div><strong id="active">0</strong><small>Drones em voo</small></div></article><article><span class="stat-icon green">⌂</span><div><strong id="available">10</strong><small>Prontos / carregando</small></div></article><article><span class="stat-icon amber">▤</span><div><strong id="pending">26</strong><small>Pedidos pendentes</small></div></article></div><div class="progress-row"><span>Pedidos atendidos</span><span id="progressText">0 / 26</span></div><div class="progress"><i id="progressBar"></i></div></section>
+      <section class="fleet"><div class="section-title"><h2>Frota de drones</h2><span class="subtle">10 unidades</span></div><div id="fleetList" class="fleet-list"></div></section>
+      <section class="orders"><div class="section-title"><h2>Pedidos</h2><span class="subtle">Acompanhamento ao vivo</span></div><div class="order-tabs" role="tablist"><button class="order-tab active" data-tab="orders" role="tab" aria-selected="true">Pedidos</button><button class="order-tab" data-tab="activity" role="tab" aria-selected="false">Atividade</button></div><div id="ordersList" class="orders-list" role="tabpanel"></div><div id="activity" class="activity" role="tabpanel" hidden><p class="empty">Aguardando início da operação…</p></div></section>
+      <div class="notice">ⓘ <span>Distâncias e tempos são aproximados para fins de simulação. O mapa não representa navegação real.</span></div>
+    </aside>
+  </main><script src="script.js"></script>
+</body></html>
